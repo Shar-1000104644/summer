@@ -1,0 +1,23 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "chat libre",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Shar-1000104644@github.com/Shar-1000104644/chat.git"
+  },
+  "author": "Rosario Rosales Calle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shar-1000104644/chat/issues"
+  },
+  "homepage": "https://github.com/Shar-1000104644/chat#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.6"
+  }
+}
