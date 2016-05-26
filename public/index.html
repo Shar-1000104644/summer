@@ -2,51 +2,134 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>SummerChat</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Pinyon+Script' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/jquery.mCustomScrollbar.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/jquery.mCustomScrollbar.concat.min.js">
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
+
 </head>
 <body>
 	<div id="bienvenida">
 		<h1>Bienvenida</h1>
 		<p>Ingresa tu nombre</p>
 		<input type="text" id="nombre" class="form-control">
-		<button onclick="guardarNombre()">Entrar</button>
-		<div>
-		  class="fb-like"
-		  data-share="true"
-		  data-width="450"
-		  data-show-faces="true">
-		</div>
-	</div>
-	<div class="container">
-		<div id="caja" class="row">
-			<div id="integrantes" class="col-md-3 pull-left">
-				<ul id="lista_integrantes"></ul>		
-			</div>
-			<div id="chat" class="col-md-9 pull-right">
-				<h1></h1>
-				<p>Solo puedes envíar mensajes, en una siguiente versión también lo verás!!</p>
-				<input type="text" id="mensaje" class="form-control">
-				<button onclick="enviarMensaje()">Enviar mensaje</button>
-				<button onclick="limpiarMensajes()">Limpiar mensajes</button>
-				<ul id="lista_mensajes" class="list-group"></ul>
-				<p>
-					<small style="font-size:10px;">Si haces uso de este chat aceptas eliminar los break's por el resto de tu vida</small>
-				</p>
+		<button  class="btn btn-default btn-file" onclick="iniciarSesion()">Entrar</button>
+		<label class="btn btn-default btn-file">
+    	Tu foto<input type="file" id="files" name="files[]" style="display: none;">
+		</label>
+		<div class="fc">
+			<div
+			  class="fb-like"
+			  data-share="true"
+			  data-width="450"
+			  data-show-faces="true">
 			</div>
 		</div>
 	</div>
 
+	<div id="caja" class="container">
+		<div class="row encabezado">
+			<div class="col-md-3">
+				<output id="foto"></output>	
+			</div>
+			<div class="col-md-9">
+				<h1></h1>
+				<div class="row iconos">
+					<a class="fa fa-times-circle" onclick="cerrarSesion()"></a>
+					<a class="fa fa-trash" onclick="limpiarMensajes()"></a>
+					<a class="fa fa-smile-o" onclick="enviarMensaje()"></a>
+				</div>
+			</div>	
+		</div>
+		<div class="row uno">
+		<div class="col-md-3">
+			<div class="integrantes fondox">
+				<ul id="lista_conectados" class="lateral">
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-9 fondo ">
+			<div class="mensajes">	
+				<ul id="lista_mensajes" class="lateral"></ul>
+			</div>
+		</div>
+		</div>
+		<div class="row dos" id="chat">
+			<input placeholder="Escribe tu mensaje aqui <3" class="btn btn-file pull-right" type="text" id="mensaje" style="width:73.5%; margin:1%;">
+		</div>
+	</div>
+
+
+
+<!--JAVA SCRIPT-->	
+	<script>
+	  function handleFileSelect(evt) {
+	    var files = evt.target.files; // FileList object
+
+	    // Loop through the FileList and render image files as thumbnails.
+	    for (var i = 0, f; f = files[i]; i++) {
+
+	      // Only process image files.
+	      if (!f.type.match('image.*')) {
+	        continue;
+	      }
+
+	      var reader = new FileReader();
+
+	      // Closure to capture the file information.
+	      reader.onload = (function(theFile) {
+	        return function(e) {
+	          // Render thumbnail.
+	          var span = document.createElement('span');
+	          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+	                            '" title="', escape(theFile.name), '"/>'].join('');
+	          document.getElementById('foto').insertBefore(span, null);
+	        };
+	      })(f);
+
+	      // Read in the image file as a data URL.
+	      reader.readAsDataURL(f);
+	    }
+	  }
+
+	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+	</script>
+
+	<script>
+		(function($){
+			$(window).load(function(){
+				
+				$("#integrantes").mCustomScrollbar({
+					autoHideScrollbar:true,
+					theme:"rounded"
+				});
+				
+			});
+		})(jQuery);
+	</script>
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-78154687-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
 	<script>
 	  window.fbAsyncInit = function() {
 	    FB.init({
-	      appId      : '1547098295585870',
+	      appId      : '1690587984538594',
 	      xfbml      : true,
 	      version    : 'v2.6'
 	    });
@@ -61,23 +144,51 @@
 	   }(document, 'script', 'facebook-jssdk'));
 	</script>
 
-
-
 	<script>
 		var socket = io('/');
 		var nombre;
 
-		function guardarNombre()
+		// function guardarNombre()
+		// {
+		// 	nombre = $('#nombre').val();
+		// 	$('#bienvenida').hide();
+		// 	$('#caja').show();
+		// 	usuario = $('#nombre').val();	
+		// 	$('h1').html(nombre);
+		// }
+
+		  $(document).ready(function() 
+            {    
+           
+              $('#nombre').keypress(function(e){   
+               if(e.which == 13){      
+                 iniciarSesion()(); 
+               } 
+
+              });
+               $('#mensaje').keypress(function(e){   
+               if(e.which == 13){      
+                 enviarMensaje();      
+               }   
+              });    
+             
+              });
+
+		function iniciarSesion()
 		{
+
 			nombre = $('#nombre').val();
 			$('#bienvenida').hide();
 			$('#caja').show();
-			$('#lista_integrantes').append('<li class="usuario">' + nombre + " " + "acaba de iniciar sesion" + '</li>')
+			usuario = $('#nombre').val();	
+			$('h1').html(nombre);
+
+		  	socket.emit('conectado',"<h3>" + nombre + "</h3>" + "<p class='verde'>" + "Inicio Sesión" + "</p>");
 		}
 
 		function enviarMensaje()
 		{
-			socket.emit('chat', "<span class='label label-danger'>" +  nombre + "</span> : " + $('#mensaje').val()  );
+			socket.emit('chat', "<span class='label label-pink'>" +  nombre + "</span> : " + $('#mensaje').val()  );
 			$('#mensaje').val('');
 			$('#mensaje').focus();
 		}
@@ -87,12 +198,27 @@
 			$('#lista_mensajes').html('');
 		}
 
-		socket.on('nuevo_mensaje', function (_msg)
+		socket.on('nuevo_integrante', function (_int)
 		{
-			$('#lista_mensajes').append('<li class="list-group-item usuario">' + _msg + '</li>');
+			$('#lista_conectados').append('<li>' + _int + '</li>');
 		});
 
+
+		socket.on('nuevo_mensaje', function (_msg)
+		{
+			$('#lista_mensajes').append('<li class="linea">' + _msg + '</li>');
+		});
+
+
+		function cerrarSesion()
+		{
+			$('#caja').hide();
+			$('#bienvenida').show();
+
+			socket.emit('conectado',"<h3>" + nombre + "</h3>" + "<p class='rojo'>" + "Cerro Sesión" + "</p>");
+		}
 	</script>
+
 </body>
 </html>
 
