@@ -1,7 +1,7 @@
 // *{outline: 1px solid blue}
 body{
 	font-family: 'Indie Flower', cursive;
-	font-size: 25px;
+	font-size: 20px;
 	font-weight: bold;
 }
 h1,h2,h3,h4,h5,h6{
@@ -65,8 +65,7 @@ output{ height: 150px; width: 100%;text-align:center;}
 
 .uno{
 	margin:1%;
-.integrantes{ height: 415px; overflow:auto;
-
+.integrantes{ height: 415px; overflow:auto; padding: 5% 2%;
  }
 
 .fondo{ padding:3%;}
@@ -93,7 +92,7 @@ input:hover{ border:1px solid #000;}}
 .fondox{ outline: 1px dashed black; background:rgba(255, 255, 255, 0.8);}
 .fondo{ outline: 1px dashed black; outline-offset: -20px; background:rgba(255, 255, 255, 0.8);padding:1% 2%;}
 .label-pink{ background:rgba(252, 142, 142, .6);}
-.lateral,.mensajes,.integrantes
+.lateral,.mensajes,.integrantes,
 {
     transform:rotateX(180deg);
     -ms-transform:rotateX(180deg); 
@@ -101,3 +100,4 @@ input:hover{ border:1px solid #000;}}
 
 .rojo{ color: red;}
 .verde{ color: green;}
+

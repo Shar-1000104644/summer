@@ -11,8 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/jquery.mCustomScrollbar.min.css">
-	<link rel="stylesheet" type="text/css" href="../css/jquery.mCustomScrollbar.concat.min.js">
+	<link rel="stylesheet" type="text/css" href="jquery.mCustomScrollbar.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
 
 </head>
@@ -50,14 +49,13 @@
 			</div>	
 		</div>
 		<div class="row uno">
-		<div class="col-md-3">
-			<div class="integrantes fondox">
-				<ul id="lista_conectados" class="lateral">
-				</ul>
+		<div class="col-md-3 ">
+			<div class="integrantes fondox content mCustomScrollbar" data-mcs-theme="rounded-dark">
+				<ul id="lista_conectados" class="lateral"></ul>
 			</div>
 		</div>
-		<div class="col-md-9 fondo ">
-			<div class="mensajes">	
+		<div class="col-md-9 fondo">
+			<div class=" mensajes content mCustomScrollbar" data-mcs-theme="rounded-dark">	
 				<ul id="lista_mensajes" class="lateral"></ul>
 			</div>
 		</div>
@@ -67,7 +65,7 @@
 		</div>
 	</div>
 
-
+		
 
 <!--JAVA SCRIPT-->	
 	<script>
@@ -93,7 +91,7 @@
 	                            '" title="', escape(theFile.name), '"/>'].join('');
 	          document.getElementById('foto').insertBefore(span, null);
 	        };
-	      })(f);
+	      })(f); 
 
 	      // Read in the image file as a data URL.
 	      reader.readAsDataURL(f);
@@ -103,18 +101,6 @@
 	  document.getElementById('files').addEventListener('change', handleFileSelect, false);
 	</script>
 
-	<script>
-		(function($){
-			$(window).load(function(){
-				
-				$("#integrantes").mCustomScrollbar({
-					autoHideScrollbar:true,
-					theme:"rounded"
-				});
-				
-			});
-		})(jQuery);
-	</script>
 
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -181,14 +167,14 @@
 			$('#bienvenida').hide();
 			$('#caja').show();
 			usuario = $('#nombre').val();	
-			$('h1').html(nombre);
+			$('h1').html("El chat de" + " " + nombre);
 
 		  	socket.emit('conectado',"<h3>" + nombre + "</h3>" + "<p class='verde'>" + "Inicio Sesión" + "</p>");
 		}
 
 		function enviarMensaje()
 		{
-			socket.emit('chat', "<span class='label label-pink'>" +  nombre + "</span> : " + $('#mensaje').val()  );
+			socket.emit('chat', "<span class='label label-pink'>" +  nombre  +"</span> : " + $('#mensaje').val()  );
 			$('#mensaje').val('');
 			$('#mensaje').focus();
 		}
@@ -218,6 +204,15 @@
 			socket.emit('conectado',"<h3>" + nombre + "</h3>" + "<p class='rojo'>" + "Cerro Sesión" + "</p>");
 		}
 	</script>
+
+	<!-- Google CDN jQuery with fallback to local -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	
+	<!-- custom scrollbar plugin -->
+	<script src="jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+	
 
 </body>
 </html>
